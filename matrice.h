@@ -21,17 +21,18 @@ void Liberematrice(Matrice* matrice);
 
 void MultiplyLine(Matrice* matrice, float value, int line);
 
-void Multiply(Matrice* matrice, float value)
+
+void Multiply(Matrice* matrice, float value);
 
 void Add(Matrice* matrice, int destination, int line, float facteurDestination, float facteurLine);
 
 void Switch(Matrice* matrice, int destination, int line);
 
-int pivot(float* T, int col);
+int Pivot(float* T, int col);
 
-int creux(float* T, int col);
+int Creux(float* T, int col);
 
-float determinant(int n, float** matrice);
+float Determinant(int n, float** matrice);
 
 float** SousMatrice(int n, float** matrice, int ls, int cs);
 

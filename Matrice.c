@@ -63,7 +63,7 @@ void MultiplyLine(Matrice* matrice, float value, int line)
 
 void Multiply(Matrice* matrice, float value)
 {
-	int i;
+	int i=0;
 	for (; i < matrice->lin; i++)
 		MultiplyLine(matrice, value, i);
 }
@@ -73,7 +73,12 @@ void Add(Matrice* matrice, int destination, int line, float facteurDestination, 
 	int i;
 	float** T = matrice->matrice;
 	for (i = 0; i < matrice->col; i++)
-		T[destination][i] = facteurDestination * T[destination][i] + facteurLine * T[destination][i];
+	{
+		if(facteurDestination=1)
+			T[destination][i] += facteurLine * T[line][i];
+		else
+		T[destination][i] = facteurDestination * T[destination][i] + facteurLine * T[line][i];
+	}
 }
 
 void Switch(Matrice* matrice, int destination, int line)
@@ -84,16 +89,16 @@ void Switch(Matrice* matrice, int destination, int line)
 	T[destination]= tmp;
 }
 
-int pivot(float* T, int col)
+int Pivot(float* T, int col)
 {
 	int i = 0;
 	for (; i < col; i++)
 		if (T[i])
 			break;
-	return i;
+	return i+1;
 }
 
-int creux(float* T, int col)
+int Creux(float* T, int col)
 {
 	int i = 0, result = 0;
 	for (; i < col; i++)
@@ -102,7 +107,7 @@ int creux(float* T, int col)
 	return result;
 }
 
-float determinant(int n, float** matrice)
+float Determinant(int n, float** matrice)
 {
 	int i;
 	float det = 0, ** sousMatrice=NULL;
@@ -113,7 +118,7 @@ float determinant(int n, float** matrice)
 		for (i = 0; i != n; i++)
 		{
 			sousMatrice = SousMatrice(n, matrice, 0, i);
-			det += (2*(i % 2) - 1) * matrice[0][i] * determinant(n - 1, sousMatrice);
+			det += (2*(i % 2) - 1) * matrice[0][i] * Determinant(n - 1, sousMatrice);
 			/*i=0 <=> -1 else 1*/
 		}
 	}
@@ -151,9 +156,9 @@ Matrice* InitMatrice()
 	int i, j;
 	Matrice* matrice;
 	printf("Dimension de la matrice \n\tnombre de Line :");
-	scanf_s("%d", &j);
-	printf("\tnombre de Colonne :");
 	scanf("%d", &i);
+	printf("\tnombre de Colonne :");
+	scanf("%d", &j);
 	matrice = AlloueMatrice(i, j);
 	for (i = 0; i != matrice->lin; i++)
 		for (j = 0; j != matrice->col; j++)
