@@ -83,7 +83,7 @@ void Add(Matrice* matrice, int destination, int line, float facteurDestination, 
 	float** T = matrice->matrice;
 	for (i = 0; i < matrice->col; i++)
 	{
-		if(facteurDestination=1)
+		if(facteurDestination==1)
 			T[destination][i] += facteurLine * T[line][i];
 		else
 		T[destination][i] = facteurDestination * T[destination][i] + facteurLine * T[line][i];
@@ -186,7 +186,7 @@ float** SousMatrice(int n, float** matrice, int ls, int cs)
 	return sousMatrice;
 }
 
-Matrice* Inverse(Matrice matrice)
+Matrice* InverseDet(Matrice matrice)
 {
 	int i,j;
 	float** T = matrice.matrice,det;
@@ -198,9 +198,9 @@ Matrice* Inverse(Matrice matrice)
 		return result;
 	det = Determinant(matrice.lin, T);
 	if(det!=0)
-		for (j = 0; j < matrice.lin; j++)
-			for (i = 0; i < matrice.col; i++)
-				result->matrice[i][j] =  1 / det * PlusouMoin(i+j) * Determinant(matrice.lin - 1,SousMatrice( matrice.lin ,T, i, j));
+		for (i = 0; i < matrice.lin; i++)
+			for (j = 0; j < matrice.col; j++)
+				result->matrice[j][i] =  ( 1 / det ) * PlusouMoin(i+j) * Determinant(matrice.lin - 1,SousMatrice( matrice.lin ,T, i, j));
 	else
 	{
 		Liberematrice(result);
@@ -212,14 +212,15 @@ Matrice* Inverse(Matrice matrice)
 Matrice* Produit(Matrice A, Matrice B)
 {
 	Matrice* result = NULL;
-	int i, j;
+	int i, j, k;
 	if (A.col != B.lin)
 		return result;
 	result = AlloueMatrice(A.lin, B.col);
 	for (i = 0; i < result->lin; i++)
 		for (j = 0; j < result->col; j++)
 			for (k = 0; k < A.col; k++)
-				result->matrice[i][j] += A.matrice[i][k] * B.matrice[K][j];
+				result->matrice[i][j] += A.matrice[i][k] * B.matrice[k][j];
+	return result;
 }
 
 

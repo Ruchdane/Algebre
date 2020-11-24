@@ -36,9 +36,12 @@ float Determinant(int n, float** matrice);
 
 void Echelonner(Matrice* matrice);
 
+
 float** SousMatrice(int n, float** matrice, int ls, int cs);
 
-Matrice* Inverse(Matrice matrice);
+Matrice* InverseDet(Matrice matrice);
+
+Matrice* Produit(Matrice A, Matrice B);
 
 Matrice* InitMatrice();
 
